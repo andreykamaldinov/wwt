@@ -3,3 +3,17 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom'
+
+import './src/i18n'
+
+HTMLDialogElement.prototype.showModal = function showModal(
+	this: HTMLDialogElement
+): void {
+	this.open = true
+}
+
+HTMLDialogElement.prototype.close = function close(
+	this: HTMLDialogElement
+): void {
+	this.open = false
+}

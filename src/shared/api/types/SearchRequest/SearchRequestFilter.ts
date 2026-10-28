@@ -1,4 +1,4 @@
-import { FilterType } from '../Filter'
+import { FilterType } from '@api/types/Filter'
 
 export interface SearchRequestFilterBase {
 	id: string

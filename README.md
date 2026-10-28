@@ -91,3 +91,52 @@ Also, to see how the compiled version of the program looks, you can use the scri
 ```shell
 npm run preview
 ```
+
+## Solution overview
+
+No new dependencies were added — everything is built with the technologies already installed in the project.
+
+### Structure
+
+Code that belongs to one part of the UI lives next to it: component, hook, types and translations.
+
+```
+src
+├── i18n.ts                         # merges translations of all sections and initialises i18next
+├── shared                          # reusable building blocks
+│   ├── api                         # API types and the filter items request (react-query)
+│   ├── button / checkbox / divider / modal
+│   ├── disclosure / class-names    # small hooks and utils
+│   ├── language.enum.ts            # supported languages (English)
+│   ├── translation.enum.ts         # i18n namespaces
+│   └── shared-i18n.ts
+├── store
+│   └── search-filter               # global zustand store with the applied SearchRequestFilter
+└── pages
+    └── home                        # homepage: open button + applied filter as JSON
+        ├── home-i18n.ts
+        └── filter-modal            # filter modal and everything it is built from
+            ├── filter-modal.hook.ts, filter-draft.hook.ts
+            ├── filter-section-list / filter-section / filter-option
+            └── confirm-apply-modal
+```
+
+### Conventions
+
+- kebab-case folders and files; suffixes describe the role: `*.hook.ts`, `*.types.ts`, `*.enum.ts`, `*.utils.ts`, `*.store.ts`, `*.service.ts`
+- Translations live in an `i18n/en.json` folder next to the component; section aggregators (`home-i18n.ts`, `shared-i18n.ts`) map them to `TranslationsNameSpaces`, keys are `UPPER_SNAKE_CASE`
+- Path aliases instead of relative imports (`tsconfig.json` + `vite.config.ts`): `@api`, `@temp`, `@shared`, `@store`, `@home`, `@filter-modal`
+- Components are `FC<Props>` (`FC<PropsWithChildren<Props>>` for children) with props in `*.types.ts`; logic lives in hooks
+- Colors, typography and effects are Figma styles mapped to Tailwind tokens (`grey-500`, `brand-200`, `primary-100`, `text-title`, `shadow-popup`, ...)
+
+### Flow
+
+1. `Open filter` mounts `FilterModal`, its draft is initialised with the filter from the global store (pre-fill)
+2. `Apply` opens the confirmation modal
+3. `Apply new filter` saves the draft to the store, `Use old filter` closes the modal and keeps the previous filter, `×` returns to editing
+
+### Scripts
+
+- `pnpm test:run` — run unit and integration tests once (`pnpm test` — watch mode)
+
+The GitHub Action (`.github/workflows/pipeline.yml`) checks formatting, lint, tests and the production build on every push and pull request.

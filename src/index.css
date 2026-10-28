@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@theme {
+	--font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+	--text-title: 2.5rem;
+	--text-title--line-height: 3rem;
+	--text-title-sm: 1.75rem;
+	--text-title-sm--line-height: 2.25rem;
+	--text-section: 1.5rem;
+	--text-section--line-height: normal;
+	--text-section-sm: 1.25rem;
+	--text-section-sm--line-height: normal;
+
+	--color-grey-500: #31393c;
+	--color-grey-400: #474747;
+	--color-grey-200: #b4b4b4;
+	--color-grey-50: #f4f4f4;
+	--color-brand-200: #ff5f00;
+	--color-brand-300: #ff3d00;
+	--color-primary-100: #078691;
+	--color-overlay: rgb(27 27 27 / 0.3);
+
+	--blur-overlay: 12.5px;
+
+	--shadow-popup: 0 2px 12px 0 rgb(0 0 0 / 0.14);
+}
+
+@layer base {
+	html {
+		@apply antialiased;
+	}
+
+	body {
+		@apply bg-white font-sans text-grey-500;
+	}
+
+	html:has(dialog[open]) {
+		overflow: hidden;
+	}
+}

@@ -1,4 +1,4 @@
-import { FilterType } from '.'
+import type { FilterType } from '@api/types/Filter/FilterType'
 
 export interface FilterBase {
 	id: string

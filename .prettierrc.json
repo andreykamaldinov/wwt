@@ -14,8 +14,9 @@
 	"importOrder": [
 		"^react(.*)",
 		"<THIRD_PARTY_MODULES>",
-		"@api",
-		"@(assets|components|constants|helpers|pages|providers|store|temp|utils|/)",
+		"^@(api|temp)/",
+		"^@(shared|store)/",
+		"^@(home|filter-modal)/",
 		"^[./]"
 	],
 	"importOrderSeparation": true,
